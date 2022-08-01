@@ -17,7 +17,6 @@ func (manager *ManagerDownload) QueryEvent(eventId string) (u *DownloadEvent, ok
 	manager.mu.Lock()
 	defer manager.mu.Unlock()
 	if val, ok := manager.m[eventId]; ok {
-		val.Timer.Reset(5 * time.Minute)
 		return val, ok
 	} else {
 		return nil, false

@@ -21,7 +21,7 @@ func NewDownloadEvent(headName, expandName, hash string, size uint, folderId uin
 	downloadEvent.hash = hash
 	downloadEvent.size = size
 
-	downloadEvent.Timer = time.NewTimer(5 * time.Second)
+	downloadEvent.Timer = time.NewTimer(20 * time.Second)
 	downloadEvent.foldID = folderId
 
 	downloadEvent.Id = grand.S(16)
