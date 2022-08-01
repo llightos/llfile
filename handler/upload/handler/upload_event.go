@@ -1,15 +1,17 @@
 package handler
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/gogf/gf/v2/util/grand"
-	"golang.org/x/time/rate"
-	"io"
 	"llfile/config"
 	"llfile/util"
+
+	"bytes"
+	"fmt"
+	"io"
 	"os"
 	"time"
+
+	"github.com/gogf/gf/v2/util/grand"
+	"golang.org/x/time/rate"
 )
 
 // NewUploadEvent 新建一个文件，配置这个上传事件，实现限流的配置32kb为一个单位

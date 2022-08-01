@@ -1,15 +1,17 @@
 package downhandler
 
 import (
+	"llfile/config"
+
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/gogf/gf/v2/util/grand"
-	"golang.org/x/time/rate"
 	"io"
-	"llfile/config"
 	"os"
 	"time"
+
+	"github.com/gogf/gf/v2/util/grand"
+	"golang.org/x/time/rate"
 )
 
 // NewDownloadEvent 新建一个文件，配置这个上传事件，实现限流的配置32kb为一个单位,

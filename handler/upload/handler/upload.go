@@ -1,15 +1,17 @@
 package handler
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"io"
 	"llfile/handler"
 	"llfile/model"
 	"llfile/msg"
 	"llfile/util"
+
+	"fmt"
+	"io"
 	"os"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func CreateUploadEvent() gin.HandlerFunc {

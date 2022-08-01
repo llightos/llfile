@@ -2,21 +2,21 @@ package main
 
 // 注意，auth服务对所有信任的服务进行服务，不与底层数据库打交道，仅用于发布和鉴定token是否正确
 import (
-	"fmt"
-	"github.com/gogf/gf/v2/encoding/gbase64"
-	"github.com/gogf/gf/v2/frame/g"
 	_ "llfile/config"
 	auth "llfile/rpc/authentication"
 	"llfile/service"
 	"llfile/util"
-	"log"
 
 	"context"
 	"errors"
+	"fmt"
+	"log"
 	"net"
 	"strconv"
 	"time"
 
+	"github.com/gogf/gf/v2/encoding/gbase64"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/llightos/efind"
 	"google.golang.org/grpc"
 )

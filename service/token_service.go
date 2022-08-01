@@ -3,7 +3,6 @@ package service
 import (
 	"github.com/dgrijalva/jwt-go"
 
-	//"net/http"
 	"time"
 )
 

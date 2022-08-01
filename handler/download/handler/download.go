@@ -1,12 +1,14 @@
 package downhandler
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"io"
 	"llfile/handler"
+
+	"fmt"
+	"io"
 	"log"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func CreateDownloadEvent() gin.HandlerFunc {

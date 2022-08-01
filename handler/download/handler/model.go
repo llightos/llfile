@@ -2,12 +2,13 @@ package downhandler
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"golang.org/x/time/rate"
 	"io"
 	"log"
 	"sync"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
 )
 
 type Context struct {

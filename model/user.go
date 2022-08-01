@@ -2,8 +2,10 @@ package model
 
 import (
 	"errors"
-	"github.com/gogf/gf/v2/crypto/gmd5"
+
 	"gorm.io/gorm"
+
+	"github.com/gogf/gf/v2/crypto/gmd5"
 )
 
 type UserInfo struct {

@@ -1,14 +1,15 @@
 package rpc
 
 import (
+	"llfile/rpc/user"
+
 	"context"
 	"fmt"
-	"github.com/gogf/gf/v2/frame/g"
+	"log"
+
 	"github.com/llightos/efind"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"llfile/rpc/user"
-	"log"
 )
 
 type UserClient struct {
@@ -25,11 +26,10 @@ func NewUser() *UserClient {
 	fmt.Println("find a node", kv)
 	if err != nil {
 		log.Println(err)
-		g.Log("efind err").Error(context.TODO(), err)
 	}
 	client.conn, err = grpc.Dial(kv.Val, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
+		log.Println(err)
 	}
 	return client
 }
@@ -41,7 +41,7 @@ func (c *UserClient) CallRegister(username, password string) (ok bool, id uint) 
 		PassWord: password,
 	})
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
+		log.Println(err)
 		return false, 0
 	}
 	return userRegisterRes.Ok, uint(userRegisterRes.Id)
@@ -55,7 +55,7 @@ func (c *UserClient) CallLogin(username, password string) (ok bool, token string
 	})
 	//fmt.Println("resss", userLoginRes.Token)
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
+		log.Println(err)
 		return false, "", 0
 	}
 	return true, userLoginRes.Token, uint(userLoginRes.Id)

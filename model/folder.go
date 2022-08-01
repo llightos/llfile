@@ -3,12 +3,13 @@ package model
 import (
 	"errors"
 	"fmt"
+	"log"
+
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
-	"log"
 )
 
-// 程序内部必须动态的维持一张Folder树，用于增删改查
+// Folder 程序内部必须动态的维持一张Folder树，用于增删改查
 // 用户文件夹
 type Folder struct {
 	gorm.Model
@@ -134,9 +135,6 @@ func GetUserAllFolder(userid int) []*Folder {
 }
 
 // build 对外调用时f是user的根节点，
-// 再来理解下递归，递归分为被影响量和影响量，
-// 这里来说，f就是被影响量， 而folders就是影响量，f和folders是链式的也是线性的
-// 最开始的f（这里是外调用放root），f是跟着folders的改变而变，也就是两个都得变，不然就没有影响因子
 func (f *Folder) build(folders []*Folder) {
 	//if len(folders) == 0 {
 	//	return

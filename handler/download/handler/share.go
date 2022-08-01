@@ -1,12 +1,14 @@
 package downhandler
 
 import (
-	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"github.com/gogf/gf/v2/util/grand"
 	"llfile/handler"
 	"llfile/model"
 	"llfile/service"
+
+	"encoding/json"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gogf/gf/v2/util/grand"
 )
 
 type LinkInfo struct {

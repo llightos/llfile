@@ -1,8 +1,9 @@
 package downhandler
 
 import (
-	"github.com/gin-gonic/gin"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func MyCtx(c *gin.Context) *Context {

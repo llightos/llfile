@@ -3,16 +3,16 @@ package rpc
 // 客户端代码是公用代码，所用端服务内的接口都可以调用，
 // 用于颁发token和验证token是否过期，是否合法
 import (
-	"fmt"
 	_ "llfile/config"
 	auth "llfile/rpc/authentication"
 
 	"context"
-	"github.com/gogf/gf/v2/frame/g"
+	"fmt"
+	"log"
+
 	"github.com/llightos/efind"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"log"
 )
 
 type AuthClient struct {
@@ -29,11 +29,10 @@ func NewAuth() *AuthClient {
 	fmt.Println("find a node", kv)
 	if err != nil {
 		log.Println(err)
-		g.Log("efind err").Error(context.TODO(), err)
 	}
 	client.conn, err = grpc.Dial(kv.Val, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
+		log.Println(err)
 	}
 	return client
 }
@@ -42,7 +41,6 @@ func (c *AuthClient) CallCreateToken(userid uint) (*auth.CreateTokenResp, error)
 	authClient := auth.NewAuthClient(c.conn)
 	authRes, err := authClient.CreateToken(context.TODO(), &auth.CreateTokenReq{Userid: uint32(userid)})
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
 		return &auth.CreateTokenResp{
 			Ok:    false,
 			Token: "",
@@ -60,7 +58,7 @@ func (c *AuthClient) CallAuthToken(token string, userid int) (*auth.AuthTokenRes
 		Data:   "",
 	})
 	if err != nil {
-		g.Log("err").Print(context.TODO(), err)
+		log.Println(err)
 		return &auth.AuthTokenResp{
 			Ok:   false,
 			Data: "err",
