@@ -112,7 +112,7 @@ func UpdateContinue() gin.HandlerFunc {
 		if !util.FileHash(event.hash) { //计算存储后的文件与传过来的hash不相等
 			//如果不晓得就删除文件
 			fmt.Println("hash:", event.hash)
-			os.Remove("./file/" + event.hash + "./llfile")
+			_ = os.Remove("./file/" + event.hash + "./llfile")
 			event.StopFile()
 			c.ReturnErr400("文件hash值与入参不匹配")
 			return
@@ -192,7 +192,7 @@ func Upload() gin.HandlerFunc {
 
 		if !util.FileHash(uploadEvent.hash) { //计算存储后的文件与传过来的hash不相等
 			//如果不晓得就删除文件
-			os.Remove("./file/" + uploadEvent.hash + "./llfile")
+			_ = os.Remove("./file/" + uploadEvent.hash + "./llfile")
 			c.ReturnErr400("文件hash值与入参不匹配")
 			return
 		}
