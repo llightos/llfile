@@ -115,6 +115,7 @@ func UpdateContinue() gin.HandlerFunc {
 			os.Remove("./file/" + event.hash + "./llfile")
 			event.StopFile()
 			c.ReturnErr400("文件hash值与入参不匹配")
+			return
 		}
 
 		file, err := model.NewModelDB().AddFile(model.File{

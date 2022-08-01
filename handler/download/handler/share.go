@@ -71,6 +71,7 @@ func ShareDownLoadEvent() gin.HandlerFunc {
 		}
 
 		event, err := NewDownloadEvent(m.Name, m.ExpandedName, m.Hash, m.Size, m.FolderID)
+		event.SetAAA(false)
 
 		if err != nil {
 			c.ReturnErr400("NewDownloadEvent fail")

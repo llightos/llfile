@@ -36,6 +36,7 @@ func CreateDownloadEvent() gin.HandlerFunc {
 		}
 
 		event, err := NewDownloadEvent(headName, expandName, fileHash, size, 0)
+		event.SetAAA(true)
 		if err != nil {
 			c.ReturnErr400("NewDownloadEvent fail")
 			return
@@ -68,7 +69,17 @@ func Download() gin.HandlerFunc {
 		}
 
 		bytes := c.GetHeader("Bytes")
-		//	说明是断的传
+
+		//说明需要鉴权
+		if event.AAA == true {
+			_, exists := c.Get("User_id")
+			if !exists {
+				c.ReturnErr400("非法接口")
+				return
+			}
+		}
+
+		//说明是断的传
 		if bytes != "" {
 			atoi, err := strconv.Atoi(bytes)
 			if err != nil {
@@ -90,7 +101,9 @@ func Download() gin.HandlerFunc {
 		fmt.Println("written", written)
 		if err != nil {
 			log.Println("断开了连接")
+			return
 		}
+		DownloadManager.DeleteEvent(eventID)
 	}
 }
 

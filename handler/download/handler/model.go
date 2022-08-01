@@ -25,10 +25,11 @@ type ManagerDownload struct {
 }
 
 type DownloadEvent struct {
-	Id string
+	Id  string
+	AAA bool //是否需要鉴权
 
-	CreateTime time.Duration //事件创建时间，用来判断是否超时
-	limiter    *rate.Limiter
+	Timer   *time.Timer //事件创建时间，用来判断是否超时
+	limiter *rate.Limiter
 
 	HeadName   string
 	ExpandName string
@@ -45,6 +46,10 @@ type DownloadEvent struct {
 
 func init() {
 	DownloadManager = &ManagerDownload{m: make(map[string]*DownloadEvent)}
+}
+
+func (u *DownloadEvent) SetAAA(b bool) {
+	u.AAA = b
 }
 
 func (u *DownloadEvent) Read(p []byte) (n int, err error) { //不能让网络直接写数据，这样一旦寄，就没救了，应该设置一个缓冲

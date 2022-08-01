@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/util/grand"
 	"golang.org/x/time/rate"
 	"io"
+	"llfile/config"
 	"os"
 	"time"
 )
@@ -19,22 +20,23 @@ func NewDownloadEvent(headName, expandName, hash string, size uint, folderId uin
 	downloadEvent.ExpandName = expandName
 	downloadEvent.hash = hash
 	downloadEvent.size = size
-	downloadEvent.CreateTime = time.Duration(time.Now().Unix())
+
+	downloadEvent.Timer = time.NewTimer(5 * time.Second)
 	downloadEvent.foldID = folderId
 
 	downloadEvent.Id = grand.S(16)
-	downloadEvent.limiter = rate.NewLimiter(100, 200) //每s生成10个->相当于320kb/s的限流
+	downloadEvent.limiter = rate.NewLimiter(rate.Limit(config.LimitSpeed), config.LimitSpeedInt+10) //每s生成10个->相当于320kb/s的限流
 	file, err := os.Open("./file/" + hash + ".llfile")
+	if err != nil {
+		return nil, err
+	}
+
 	//把文件读进缓存里
 	buf := new(bytes.Buffer)
 	io.Copy(buf, file)
 	fmt.Println("len", buf.Len())
 	file.Close()
 	downloadEvent.Reader = buf
-
-	if err != nil {
-		return nil, err
-	}
 
 	return downloadEvent, nil
 }

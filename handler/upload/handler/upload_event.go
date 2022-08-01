@@ -6,6 +6,7 @@ import (
 	"github.com/gogf/gf/v2/util/grand"
 	"golang.org/x/time/rate"
 	"io"
+	"llfile/config"
 	"llfile/util"
 	"os"
 	"time"
@@ -22,7 +23,7 @@ func NewUploadEvent(headName, expandName, hash string, size uint, folderId uint)
 	uploadEvent.foldID = folderId
 
 	uploadEvent.Id = grand.S(16)
-	uploadEvent.limiter = rate.NewLimiter(100, 200) //令牌桶大小为10，每s生成10个->相当于320kb/s的限流
+	uploadEvent.limiter = rate.NewLimiter(rate.Limit(config.LimitSpeed), config.LimitSpeedInt+10) //令牌桶大小为10，每s生成10个->相当于320kb/s的限流
 
 	if size > util.GB { // 如果文件大于1Gb，就直接写硬盘
 		create, err := os.Create("./file/" + u.hash + ".llfile")
