@@ -1,6 +1,7 @@
 package util
 
 //AES对称加解密，注意加密后的[]byte不适用于传输，因此调用后需要进行base64或者其他方式的编码
+// 此代码
 import (
 	"crypto/aes"
 	"fmt"
