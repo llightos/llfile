@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package file_logic;
+//此层用来返回所有文件夹的信息和返回所有的文件信息，不会返回树形结构的建立
+//用一令一动的方式来管理
+
+option go_package = "./file_logic";
+
+message userinfo {
+  uint32 userid = 1 ;
+  string token = 2;
+}
+
+message folder {
+  uint32 id = 1;
+  uint32 father_id = 2;
+
+  bool root_if = 3;
+
+  repeated folder folder = 4;
+  repeated file file = 5;
+}
+message file {
+  uint32 id = 1;
+  uint32 folder_id = 2;
+
+  string name = 3;
+  string expanded_name = 4;
+  string hash = 5;
+
+  string path = 6;
+
+}
+
+message operate_folder_req {
+  string operate_type = 1; //操作类型 add,remove,search,view......
+  userinfo operator = 2;   //操作者
+
+  uint32 folder_id = 3;
+}
+
+message operate_folder_res {
+  string success = 1; //操作类型 add,remove,search,view......
+  userinfo operator = 2;   //操作者
+
+  string data = 3;
+
+  folder folder = 4;
+}
+
+service operate_it {
+    rpc test(operate_folder_req) returns (operate_folder_res);
+}

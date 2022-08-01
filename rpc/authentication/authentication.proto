@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package authentication;
+
+option go_package = "./authentication";
+
+message CreateTokenReq {
+  uint32 userid = 1;
+}
+
+message CreateTokenResp {
+  bool ok =1;
+  string token = 2;
+  string data = 3;//
+}
+
+message AuthTokenReq {
+  uint32 userid = 1;
+  string token = 2;
+  string data = 3;//可能的错误信息
+}
+
+message AuthTokenResp {
+  bool ok =1;
+  string data = 2;//可能的错误信息
+}
+
+service Auth {
+  rpc CreateToken(CreateTokenReq) returns (CreateTokenResp);
+  rpc AuthToken(AuthTokenReq) returns (AuthTokenResp);
+}

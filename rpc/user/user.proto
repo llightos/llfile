@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+// protoc --proto_path=./ --go_out .. --go-grpc_out .. .\user.proto(注意 [..] )
+
+package user;
+option go_package = "/user";
+
+message loginRequest {
+  string userName = 1;
+  string passWord = 2;
+}
+
+message registerResponse {
+  bool ok = 1;
+  uint32 id = 2;
+}
+
+message registerRequest {
+  string userName = 1;
+  string passWord = 2;
+}
+
+message loginResponse {
+  bool ok = 1;
+  string token = 2;
+  uint32 id = 3;
+}
+
+service user_server{
+  rpc login(loginRequest) returns (loginResponse);
+  rpc register(registerRequest) returns (registerResponse);
+}
