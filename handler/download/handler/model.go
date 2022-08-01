@@ -53,7 +53,7 @@ func (u *DownloadEvent) SetAAA(b bool) {
 }
 
 func (u *DownloadEvent) Read(p []byte) (n int, err error) { //不能让网络直接写数据，这样一旦寄，就没救了，应该设置一个缓冲
-	u.limiter.Wait(context.TODO())
+	_ = u.limiter.Wait(context.TODO())
 	n, err = u.Reader.Read(p)
 	if err != nil {
 		log.Println(err)

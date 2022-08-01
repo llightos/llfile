@@ -33,30 +33,30 @@ func NewDownloadEvent(headName, expandName, hash string, size uint, folderId uin
 
 	//把文件读进缓存里
 	buf := new(bytes.Buffer)
-	io.Copy(buf, file)
+	_, _ = io.Copy(buf, file)
 	fmt.Println("len", buf.Len())
-	file.Close()
+	_ = file.Close()
 	downloadEvent.Reader = buf
 
 	return downloadEvent, nil
 }
 
-func (d *DownloadEvent) Seek(n int) (err error) {
+func (u *DownloadEvent) Seek(n int) (err error) {
 	defer func() {
 		if pan := recover(); pan != nil {
 			err = errors.New("DownloadEvent Seek Err")
 		}
 	}()
 	// 缓存用了就没了，所以重传要重新读文件加载缓存
-	open, _ := os.Open("./file/" + d.hash + ".llfile")
+	open, _ := os.Open("./file/" + u.hash + ".llfile")
 	seek, err := open.Seek(int64(n), 0)
 	if err != nil {
 		return err
 	}
 	newBuffer := new(bytes.Buffer)
-	io.Copy(newBuffer, open)
-	open.Close()
-	d.Reader = newBuffer
+	_, _ = io.Copy(newBuffer, open)
+	_ = open.Close()
+	u.Reader = newBuffer
 
 	fmt.Println("success seek to ", seek)
 	return nil

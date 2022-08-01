@@ -16,7 +16,7 @@ type LinkInfo struct {
 	model.File
 }
 
-// 获得一个文件链接
+// GetShareLink 获得一个文件链接
 func GetShareLink() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		c := handler.MyCtx(context)
@@ -42,7 +42,11 @@ func GetShareLink() gin.HandlerFunc {
 			return
 		}
 
-		service.RedisAdd(linkInfo.Random, string(marshal))
+		err = service.RedisAdd(linkInfo.Random, string(marshal))
+		if err != nil {
+			c.ReturnErr400(err)
+			return
+		}
 		c.JSON(200, gin.H{
 			"status": true,
 			"data":   linkInfo.Link,
